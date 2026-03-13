@@ -1,0 +1,10 @@
+<%- include("../partials/header")%>
+<h1><%= spot.title %></h1>
+<h2><%= spot.location %></h2>
+<p><a href="/spots/<%=spot._id%>/edit">Edit</a></p>
+<!--Creates a delete route using method-override -->
+<form action="/spots/<%=spot._id%>?_method=DELETE" method="post">
+    <button>Delete</button>
+</form>
+<a href="/spots">All spots</a>
+<%- include("../partials/footer")%>

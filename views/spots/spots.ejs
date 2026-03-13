@@ -1,0 +1,11 @@
+<%- include("../partials/header")%>
+<h1>Skate or die</h1>
+<div>
+    <a href="/spots/new">Add a spot</a>
+</div>
+<ul>
+    <% for (let spot of spots) {%>
+        <li><a href="/spots/<%=spot._id%>"><%=spot.title%></a></li>
+    <%}%>
+</ul>
+<%- include("../partials/footer")%>

@@ -1,0 +1,14 @@
+<%- include("../partials/header")%>
+<form action="/spots" method="post">
+    <div>
+        <label for="spot-title">Title</label>
+        <input id="spot-title" type="text" name="spot[title]" placeholder="Spot's name">
+    </div>
+    <div>
+        <label for="spot-location">Location</label>
+        <input id="spot-location" type="text" name="spot[location]">
+    </div>  
+    <button type="submit">Add Spot</button>
+    <a href="/">Cancel</a>
+</form>
+<%- include("../partials/footer")%>
