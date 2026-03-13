@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.0"
+  },
+  "name": "sk8tt",
+  "version": "1.0.0",
+  "description": "A website to find spots",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paganini-Thurler/sk8tt.git"
+  },
+  "author": "Renato Paganini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paganini-Thurler/sk8tt/issues"
+  },
+  "homepage": "https://github.com/Paganini-Thurler/sk8tt#readme"
+}
