@@ -17,11 +17,10 @@ module.exports.descriptors = [
     'Classic',
     'Underground',
     'Stoked',
-    'Switch',
-    'Fakie',
-    'Frontside',
-    'Backside',
+    'Rougth',
     'Smooth',
+    'Mental',
+    'Insane',
     'Raw'
 ];
 

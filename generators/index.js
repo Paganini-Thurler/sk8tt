@@ -17,24 +17,25 @@ mongoose.connect('mongodb://127.0.0.1:27017/sk8tt')
         console.log(e);
     });
 
-// Generate a sample from an array
+// Generates a sample from an array
 const sample = array => array[Math.floor(Math.random() * array.length)];
 
 // Populate the database
 
 const populateDatabase = async () => {
+    // Cleans the database
     await Spot.deleteMany({});
     for(let i = 0; i < 50; i++){
         const randomCity = Math.floor(Math.random() * 1000);
         const spot = new Spot({
-            location: `${cities[randomCity]}, ${cities[randomCity].state}`,
+            location: `${cities[randomCity].city}, ${cities[randomCity].state}`,
             title : `${sample(descriptors)} ${sample(places)}`
         });
         // Debugg print
         console.log(spot);
         await spot.save();
     }
-    // Close the database
+    // Closes the database
     await mongoose.connection.close();
     console.log("Connection closed.");
 
