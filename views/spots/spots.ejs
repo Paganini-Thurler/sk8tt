@@ -1,4 +1,4 @@
-<%- include("../partials/header")%>
+<% layout("/layouts/sk8tt.ejs")%>
 <h1>Skate or die</h1>
 <div>
     <a href="/spots/new">Add a spot</a>
@@ -8,4 +8,3 @@
         <li><a href="/spots/<%=spot._id%>"><%=spot.title%></a></li>
     <%}%>
 </ul>
-<%- include("../partials/footer")%>

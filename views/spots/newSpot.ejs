@@ -1,4 +1,4 @@
-<%- include("../partials/header")%>
+<% layout("/layouts/sk8tt.ejs")%>
 <form action="/spots" method="post">
     <div>
         <label for="spot-title">Title</label>
@@ -11,4 +11,3 @@
     <button type="submit">Add Spot</button>
     <a href="/">Cancel</a>
 </form>
-<%- include("../partials/footer")%>
