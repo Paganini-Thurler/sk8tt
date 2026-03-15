@@ -9,6 +9,10 @@ const methodOverride = require("method-override");
 
 // Express middleware
 app.set("views", path.join(__dirname, "views"));
+
+// EJS mate
+const ejsMate = require("ejs-mate");
+app.engine("ejs", ejsMate);
 app.set("view engine" ,"ejs");
 
 app.use(express.urlencoded({extended:true}));
