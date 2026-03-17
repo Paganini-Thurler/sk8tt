@@ -24,6 +24,9 @@ const mongoose = require("mongoose");
 const Spot = require("./models/spot");
 const { request } = require("http");
 
+// Joi Js Validators
+const Joi = require("joi");
+
 // Endpoint error class
 const EndpointError = require("./errors/EndpointError");
 
@@ -59,9 +62,23 @@ app.get("/spots/new", (request, response) =>{
 // Post route for spots
 app.post("/spots", async (request, response,next) =>{
     try{
-        if(!request.body.spot){
-            throw new EndpointError("Not cool man!", 400);
+        // Joi schema and requirements
+        const spotSchema = Joi.object({
+            spot : Joi.object({
+                title: Joi.string().required(),
+                location: Joi.string().required,
+                description: Joi.string().required(),
+                image: Joi.string().required()
+
+            }).required()
+        });
+        // validation
+        const {error} = spotSchema.validate(request.body);
+        if(error){
+            const message = error.details.map(element => element.message).join(",");
+            throw new EndpointError(message, 400);
         }
+
         const spot = new Spot(request.body.spot);
         await spot.save();
         response.redirect(`/spots/${spot._id}`);
