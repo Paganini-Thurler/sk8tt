@@ -5,6 +5,7 @@ const spotSchema = new mongoose.Schema({
     title: String,
     description: String,
     location: String,
+    image: String,
     obstacles: String
 });
 
