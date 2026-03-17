@@ -2,22 +2,26 @@
     <div class="row">
         <h2 class="text-center">New spot</h2>
         <div class="col-6 offset-3">
-            <form action="/spots" method="post">
+            <!--Bootstrap has its own validators to use them, the default html validators must be disable-->
+            <form class="validated-form" action="/spots" method="post" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="spot-title">Title</label>
-                    <input  class="form-control" id="spot-title" type="text" name="spot[title]" placeholder="Spot's name">
+                    <input  class="form-control" id="spot-title" type="text" name="spot[title]" placeholder="Spot's name" required>
+                    <div class="valid-feedback">
+                        ok!
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="spot-location">Location</label>
-                    <input class="form-control" id="spot-location" type="text" name="spot[location]">
+                    <input class="form-control" id="spot-location" type="text" name="spot[location]" required>
                 </div>
                   <div class="mb-3">
                     <label class="form-label" for="spot-image">image URL</label>
-                    <input class="form-control" id="spot-image" type="text" name="spot[image]">
+                    <input class="form-control" id="spot-image" type="text" name="spot[image]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="spot-description">description</label>
-                    <textarea class="form-control" id="spot-description" type="text" name="spot[description]"></textarea>
+                    <textarea class="form-control" id="spot-description" type="text" name="spot[description]" required></textarea>
                 </div>
                <div class="mb-3">
                  <button  class="btn btn-success" type="submit">Add Spot</button>
@@ -26,7 +30,7 @@
                
                 <br>
             </form>
-
-
         </div>
     </div>
+
+   
