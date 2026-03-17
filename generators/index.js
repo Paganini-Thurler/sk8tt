@@ -30,7 +30,8 @@ const populateDatabase = async () => {
         const spot = new Spot({
             location: `${cities[randomCity].city}, ${cities[randomCity].state}`,
             title : `${sample(descriptors)} ${sample(places)}`,
-            image: `https://picsum.photos/400?random=${i}`
+            image: `https://picsum.photos/400?random=${i}`,
+            description: `This ${sample(descriptors)} ${sample(places)} is ${sample(descriptors)}!!!!`
         });
         // Debugg print
         console.log(spot);
