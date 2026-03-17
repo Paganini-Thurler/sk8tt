@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = 8081;
+const port = 8080;
 
 // Method override
 const methodOverride = require("method-override");
@@ -59,6 +59,9 @@ app.get("/spots/new", (request, response) =>{
 // Post route for spots
 app.post("/spots", async (request, response,next) =>{
     try{
+        if(!request.body.spot){
+            throw new EndpointError("Not cool man!", 400);
+        }
         const spot = new Spot(request.body.spot);
         await spot.save();
         response.redirect(`/spots/${spot._id}`);
@@ -109,6 +112,21 @@ app.delete("/spots/:id", async (request, response, next) =>{
         next(error);
     }
 });
+
+app.all("/{*path}", (request, response, next) =>{
+    next(new EndpointError("Page not found", 404));
+});
+
+// Error handler middleware
+app.use((error, request, response, next) =>{
+    const {statusCode = 500} = error;
+    if(!error.message){
+        error.message = "Something is wrong";
+    }
+    response.status(statusCode).render("error.ejs", {error});
+});
+
+
 // Chosen port for the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
