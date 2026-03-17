@@ -1,13 +1,32 @@
-<% layout("../layouts/sk8tt.ejs")%>
-<form action="/spots/<%=spot._id%>?_method=PUT" method="post">
-    <div>
-        <label for="spot-title">Title</label>
-        <input id="spot-title" type="text" name="spot[title]" value="<%=spot.title%>">
+<% layout("/layouts/sk8tt.ejs")%>
+<div class="row">
+        <h2 class="text-center">Edit spot</h2>
+        <div class="col-6 offset-3">
+           <form action="/spots/<%=spot._id%>?_method=PUT" method="post">
+                <div class="mb-3">
+                    <label class="form-label" for="spot-title">Title</label>
+                    <input  class="form-control" id="spot-title" type="text" name="spot[title]"value="<%=spot.title%>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="spot-location">Location</label>
+                    <input class="form-control" id="spot-location" type="text" name="spot[location]" value="<%=spot.location%>">
+                </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="spot-image">image URL</label>
+                    <input class="form-control" id="spot-image" type="text" name="spot[image]" value="<%=spot.image%>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="spot-description">description</label>
+                    <textarea class="form-control" id="spot-description" type="text" name="spot[description]" value="<%=spot.description%>"></textarea>
+                </div>
+               <div class="mb-3">
+                 <button  class="btn btn-info" type="submit">Edit Spot</button>
+                 <a class="btn btn-fail" href="/">Cancel</a>
+               </div> 
+               
+                <br>
+            </form>
+
+
+        </div>
     </div>
-    <div>
-        <label for="spot-location">Location</label>
-        <input id="spot-location" type="text" name="spot[location]" value="<%=spot.location%>">
-    </div>  
-    <button type="submit">Update Spot</button>
-    <a href="/">Cancel</a>
-</form>
