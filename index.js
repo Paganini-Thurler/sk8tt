@@ -24,6 +24,9 @@ const mongoose = require("mongoose");
 const Spot = require("./models/spot");
 const { request } = require("http");
 
+// Endpoint error class
+const EndpointError = require("./errors/EndpointError");
+
 // Database connection
 mongoose.connect('mongodb://127.0.0.1:27017/sk8tt')
     .then(() => {
@@ -67,6 +70,9 @@ app.post("/spots", async (request, response,next) =>{
 app.get("/spots/:id", async (request, response, next) =>{
     try{
         const spot = await Spot.findById(request.params.id);
+        if(!spot){
+            throw new EndPointError("Spot not found ", 404);
+        }
         console.log(spot);
         response.render("spots/showSpots.ejs", {spot});
     }catch(error){
