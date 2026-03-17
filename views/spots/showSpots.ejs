@@ -1,10 +1,20 @@
 <% layout("/layouts/sk8tt.ejs")%>
-<h1><%= spot.title %></h1>
-<h2><%= spot.location %></h2>
-<img src="<%=spot.image%>">
-<p><a href="/spots/<%=spot._id%>/edit">Edit</a></p>
-<!--Creates a delete route using method-override -->
-<form action="/spots/<%=spot._id%>?_method=DELETE" method="post">
-    <button>Delete</button>
-</form>
-<a href="/spots">All spots</a>
+    <div class="col-8 offset-4">
+        <h1>
+            <%= spot.title %>
+        </h1>
+        <h2>
+            <%= spot.location %>
+        </h2>
+        <img class="mb-3" src="<%=spot.image%>">
+        <div class="card-body">
+            <a class="btn btn-info" href="/spots/<%=spot._id%>/edit">Edit</a>
+            <!--Creates a delete route using method-override -->
+            <form class="d-inline" action="/spots/<%=spot._id%>?_method=DELETE" method="post">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+        </div>
+        <div class="mt-3">
+            <a href="/spots">All spots</a>
+        </div>
+    </div>
