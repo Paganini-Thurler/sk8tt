@@ -2,22 +2,26 @@
 <div class="row">
         <h2 class="text-center">Edit spot</h2>
         <div class="col-6 offset-3">
-           <form action="/spots/<%=spot._id%>?_method=PUT" method="post">
+           <form class="validated-form" action="/spots/<%=spot._id%>?_method=PUT" method="post" novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="spot-title">Title</label>
-                    <input  class="form-control" id="spot-title" type="text" name="spot[title]"value="<%=spot.title%>">
+                    <input  class="form-control" id="spot-title" type="text" name="spot[title]"value="<%=spot.title%>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="spot-location">Location</label>
-                    <input class="form-control" id="spot-location" type="text" name="spot[location]" value="<%=spot.location%>">
+                    <input class="form-control" id="spot-location" type="text" name="spot[location]" value="<%=spot.location%>" required>
                 </div>
                   <div class="mb-3">
                     <label class="form-label" for="spot-image">image URL</label>
-                    <input class="form-control" id="spot-image" type="text" name="spot[image]" value="<%=spot.image%>">
+                    <input class="form-control" id="spot-image" type="text" name="spot[image]" value="<%=spot.image%>" required>
+                </div>
+                <div class="mb-3">
+                    <img src="<%=spot.image%>" width="100%" alt="">
+
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="spot-description">description</label>
-                    <textarea class="form-control" id="spot-description" type="text" name="spot[description]" value="<%=spot.description%>"></textarea>
+                    <textarea class="form-control" id="spot-description" type="text" name="spot[description]" required><%=spot.description%></textarea>
                 </div>
                <div class="mb-3">
                  <button  class="btn btn-info" type="submit">Edit Spot</button>
