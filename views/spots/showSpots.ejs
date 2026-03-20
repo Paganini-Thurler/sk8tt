@@ -1,19 +1,88 @@
 <% layout("/layouts/sk8tt.ejs")%>
-    <div class="col-8 offset-4">
+    <div class="col-6 offset-3">
         <h1>
             <%= spot.title %>
         </h1>
         <h2>
             <%= spot.location %>
         </h2>
-        <img class="mb-3" src="<%=spot.image%>">
-        <div class="card-body">
-            <a class="btn btn-info" href="/spots/<%=spot._id%>/edit">Edit</a>
-            <!--Creates a delete route using method-override -->
-            <form class="d-inline" action="/spots/<%=spot._id%>?_method=DELETE" method="post">
-            <button class="btn btn-danger">Delete</button>
-        </form>
+        <p>
+            <%= spot.description %>
+        </p>
+        <div class="card-body text-center">
+            <img src="<%= spot.image %>" class="rounded shadow-sm d-block mx-auto mb-3"
+                style="max-width: 100%; height: auto; max-height: 400px;">
+
+            <div class="d-flex justify-content-end mt-3">
+                <a class="btn btn-info px-6" href="/spots/<%=spot._id%>/edit">Edit</a>
+
+                <form class="d-inline" action="/spots/<%=spot._id%>?_method=DELETE" method="post">
+                    <button class="btn btn-danger px-6">Delete</button>
+                </form>
+            </div>
         </div>
+
+        <!-- I'm not proud this hopefully will be temporary-->
+        <style>
+            .star-rating {
+                display: flex;
+                flex-direction: row-reverse;
+                /* Important for the hover logic */
+                justify-content: flex-end;
+            }
+
+            .star-rating input {
+                display: none;
+                /* Hide the actual radio buttons */
+            }
+
+            .star-rating label {
+                font-size: 2rem;
+                color: #ddd;
+                /* Default grey star */
+                cursor: pointer;
+                transition: color 0.2s;
+            }
+
+            /* Gold color when checked or hovered */
+            .star-rating input:checked~label,
+            .star-rating label:hover,
+            .star-rating label:hover~label {
+                color: #ffca08;
+                /* Classic Gold */
+            }
+        </style>
+
+        <div>
+            <form action="" class="mb-3">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Rating</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="review[stars]" value="5" />
+                        <label for="star5" title="5 stars">★</label>
+
+                        <input type="radio" id="star4" name="review[stars]" value="4" />
+                        <label for="star4" title="4 stars">★</label>
+
+                        <input type="radio" id="star3" name="review[stars]" value="3" />
+                        <label for="star3" title="3 stars">★</label>
+
+                        <input type="radio" id="star2" name="review[stars]" value="2" />
+                        <label for="star2" title="2 stars">★</label>
+
+                        <input type="radio" id="star1" name="review[stars]" value="1" required />
+                        <label for="star1" title="1 star">★</label>
+                    </div>
+                </div>
+                <div class="mb=3">
+                    <label class="form-label" for="review">Review</label>
+                    <textarea class="form-control" name="review[spot-review]" id="spot-review" cols="30" ,
+                        rows="5"></textarea>
+                </div>
+                <button class="btn btn-sucess">Submit review</button>
+            </form>
+        </div>
+
         <div class="mt-3">
             <a href="/spots">All spots</a>
         </div>
