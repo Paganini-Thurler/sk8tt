@@ -6,7 +6,13 @@ const spotSchema = new mongoose.Schema({
     description: String,
     location: String,
     image: String,
-    obstacles: String
+    obstacles: String,
+    reviews:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }
+    ]
 });
 
 // Exports the model 
