@@ -54,10 +54,10 @@
         </style>
 
         <div>
-            <form action="" class="mb-3">
+            <form class="validated-form" action="/spots/<%=spot._id%>/reviews" method="post" class="mb-3">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Rating</label>
-                    <div class="star-rating">
+                    <div class="star-rating"    >
                         <input type="radio" id="star5" name="review[stars]" value="5" />
                         <label for="star5" title="5 stars">★</label>
 
@@ -76,14 +76,14 @@
                 </div>
                 <div class="mb=3">
                     <label class="form-label" for="review">Review</label>
-                    <textarea class="form-control" name="review[spot-review]" id="spot-review" cols="30" ,
-                        rows="5"></textarea>
+                    <textarea class="form-control" name="review[body]" id="body" cols="30"
+                        rows="5" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
                 </div>
-                <button class="btn btn-sucess">Submit review</button>
+                <button class="btn btn-success mt-3">Submit review</button>
             </form>
         </div>
 
-        <div class="mt-3">
-            <a href="/spots">All spots</a>
-        </div>
     </div>
