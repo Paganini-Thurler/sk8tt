@@ -5,46 +5,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sk8'tt</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Using Bootstrap 5.3.0 for stability -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons for that extra polish -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
+    <style>
+        /* 1. Global Midnight Reset */
+        body {
+            background-color: #000000 !important;
+            /* Pure Black */
+            color: #f8f9fa;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-column: column;
+        }
+
+        /* 2. Artistic Navbar Styling */
+        .navbar {
+            background-color: #000000 !important;
+            border-bottom: 1px solid #222;
+            /* Subtle separation */
+        }
+
+        .skate-brand {
+            background: #ffc107;
+            /* Skater Yellow */
+            color: #000 !important;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            transform: skew(-10deg);
+            box-shadow: 3px 3px 0px #fff;
+            /* White shadow for pop on black */
+            transition: all 0.2s;
+            padding: 0.5rem 1.5rem;
+        }
+
+        .skate-brand:hover {
+            transform: skew(-10deg) scale(1.05);
+            background: #fff;
+            /* Flashes white on hover */
+        }
+
+        .skate-link {
+            color: #fff !important;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .skate-link:hover {
+            color: #ffc107 !important;
+        }
+
+        /* 3. High-Contrast Components */
+        .card {
+            background-color: #111111;
+            /* Slightly lighter than body so it's visible */
+            color: white;
+            border: 1px solid #222;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 4. Yellow Accents & Buttons */
+        .text-primary,
+        .btn-info {
+            color: #ffc107 !important;
+        }
+
+        .btn-success {
+            background-color: #ffc107;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-success:hover {
+            background-color: #fff;
+            /* White hover for that high-end look */
+            color: #000;
+        }
+
+        /* Ensure the footer matches */
+        footer {
+            background-color: #000 !important;
+            border-top: 1px solid #222;
+        }
+    </style>
+    <script>
+        const btnSwitch = document.querySelector('#btnSwitch');
+        const htmlElement = document.documentElement;
+
+        // 1. On Page Load: Check if a theme is saved in localStorage
+        const savedTheme = localStorage.getItem('sk8tt-theme') || 'dark';
+        htmlElement.setAttribute('data-bs-theme', savedTheme);
+
+        // 2. On Click: Toggle between light and dark
+        if (btnSwitch) {
+            btnSwitch.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+                localStorage.setItem('sk8tt-theme', newTheme);
+            });
+        }
+    </script>
 </head>
 
 <body class="d-flex flex-column vh-100">
-        
+
     <%- include("../partials/navbar.ejs")%>
 
-    <main class="container mt-5">
-        <%- body %>
-    </main>
+        <main class="container mt-5 pb-5">
+            <%- body %>
+        </main>
 
-    <%- include("../partials/footer.ejs")%>
-    
-    <!--Client side validators-->
-    <script>
-        (() => {
-            'use strict'
+        <%- include("../partials/footer.ejs")%>
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            const forms = document.querySelectorAll('.validated-form')
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-            // Loop over them and prevent submission
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        })()
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+            <script>
+                // Form Validation Script
+                (() => {
+                    'use strict'
+                    const forms = document.querySelectorAll('.validated-form')
+                    Array.from(forms).forEach(form => {
+                        form.addEventListener('submit', event => {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+                })()
+            </script>
 </body>
 
 </html>

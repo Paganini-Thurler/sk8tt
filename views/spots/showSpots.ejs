@@ -1,10 +1,10 @@
 <% layout("/layouts/sk8tt.ejs")%>
 
-<div class="container mt-4">
+<div class="container mt-4 pb-5">
     <div class="row">
-        <div class="col-lg-6">
-            <div class="card shadow-sm mb-4 border-0">
-                <img src="<%= spot.image %>" class="card-img-top rounded-top" alt="<%= spot.title %>" style="max-height: 500px; object-fit: cover;">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <img src="<%= spot.image %>" class="card-img-top rounded-top" alt="<%= spot.title %>" style="max-height: 400px; object-fit: cover;">
                 <div class="card-body p-4">
                     <h1 class="card-title fw-bold display-6"><%= spot.title %></h1>
                     <h5 class="text-muted mb-3"><i class="bi bi-geo-alt"></i> <%= spot.location %></h5>
@@ -13,9 +13,7 @@
                     <hr class="my-4">
                     
                     <div class="d-flex gap-2">
-                        <a class="btn btn-info text-white px-4" href="/spots/<%=spot._id%>/edit">
-                            Edit Spot
-                        </a>
+                        <a class="btn btn-info text-white px-4" href="/spots/<%=spot._id%>/edit">Edit Spot</a>
                         <form action="/spots/<%=spot._id%>?_method=DELETE" method="post">
                             <button class="btn btn-outline-danger px-4">Delete Spot</button>
                         </form>
@@ -26,39 +24,10 @@
 
         <div class="col-lg-6">
             <div class="ps-lg-4">
-                <h3 class="fw-bold mb-4">Community Feedback</h3>
-
+                
                 <div class="card shadow-sm border-0 mb-5">
-                    <div class="reviews-container">
-                    <% if (spot.reviews.length === 0) { %>
-                        <div class="alert alert-light text-center border-dashed py-4">
-                            <p class="text-muted mb-0">No reviews yet. Be the first to drop some knowledge!</p>
-                        </div>
-                    <% } %>
-
-                    <% for(let review of spot.reviews) { %>
-                        <div class="card mb-3 border-0 shadow-sm">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between">
-                                    <div class="mb-2">
-                                        <% for(let i=1; i <=5; i++) { %>
-                                            <span class="<%= i <= review.stars ? 'text-warning' : 'text-muted' %> fs-5">★</span>
-                                        <% } %>
-                                    </div>
-                                    <form action="/spots/<%= spot._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                                        <button class="btn btn-link text-danger p-0 border-0" title="Delete Review">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                                <p class="card-text text-dark"><%= review.body %></p>
-                            </div>
-                        </div>
-                    <% } %>
-                </div>
-
                     <div class="card-body p-4">
-                        <h4 class="card-title mb-3">Leave a Review</h4>
+                        <h4 class="card-title mb-3 text-uppercase fw-bold">Leave a Review</h4>
                         <form class="validated-form" action="/spots/<%=spot._id%>/reviews" method="post" novalidate>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Rating</label>
@@ -79,14 +48,43 @@
                             <div class="mb-3">
                                 <label class="form-label fw-bold" for="body">Your Thoughts</label>
                                 <textarea class="form-control" name="review[body]" id="body" rows="3" placeholder="How was the session?" required></textarea>
-                                <div class="valid-feedback">Sweet!</div>
                             </div>
-                            <button class="btn btn-success w-100 py-2 fw-bold">Submit Review</button>
+                            <button class="btn btn-success w-100 py-2 fw-bold text-uppercase">Submit Review</button>
                         </form>
                     </div>
                 </div>
 
-                
+                <h4 class="fw-bold mb-3 text-uppercase">Community Feedback</h4>
+                <div class="reviews-list">
+                    <% if (spot.reviews.length === 0) { %>
+                        <div class="alert alert-dark text-center border-dashed py-4 bg-transparent">
+                            <p class="text-muted mb-0">No reviews yet. Be the first to drop some knowledge!</p>
+                        </div>
+                    <% } %>
+
+                    <% for(let review of spot.reviews) { %>
+                        <div class="card mb-3 border-0 shadow-sm bg-dark-subtle">
+                            <div class="card-body p-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="mb-1">
+                                            <% for(let i=1; i <=5; i++) { %>
+                                                <span class="<%= i <= review.stars ? 'text-warning' : 'text-muted' %> fs-6">★</span>
+                                            <% } %>
+                                        </div>
+                                        <p class="card-text mb-0"><%= review.body %></p>
+                                    </div>
+                                    <form action="/spots/<%= spot._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                        <button class="btn btn-sm text-danger border-0 p-0" title="Delete Review">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+
             </div>
         </div>
     </div>
@@ -94,10 +92,15 @@
 
 <style>
     .star-rating input { display: none; }
-    .star-rating label { color: #ddd; cursor: pointer; transition: color 0.2s; margin-bottom: 0; }
+    .star-rating label { color: #444; cursor: pointer; transition: color 0.2s; margin-bottom: 0; }
     .star-rating input:checked ~ label,
     .star-rating label:hover,
-    .star-rating label:hover ~ label { color: #ffca08; }
+    .star-rating label:hover ~ label { color: #ffc107; }
     
-    .border-dashed { border: 2px dashed #dee2e6; }
+    .border-dashed { border: 2px dashed #444 !important; }
+    
+    /* Ensure cards stay dark in your blackout theme */
+    [data-bs-theme="dark"] .bg-dark-subtle {
+        background-color: #111 !important;
+    }
 </style>
