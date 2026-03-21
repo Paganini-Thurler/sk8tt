@@ -1,89 +1,103 @@
 <% layout("/layouts/sk8tt.ejs")%>
-    <div class="col-6 offset-3">
-        <h1>
-            <%= spot.title %>
-        </h1>
-        <h2>
-            <%= spot.location %>
-        </h2>
-        <p>
-            <%= spot.description %>
-        </p>
-        <div class="card-body text-center">
-            <img src="<%= spot.image %>" class="rounded shadow-sm d-block mx-auto mb-3"
-                style="max-width: 100%; height: auto; max-height: 400px;">
 
-            <div class="d-flex justify-content-end mt-3">
-                <a class="btn btn-info px-6" href="/spots/<%=spot._id%>/edit">Edit</a>
-
-                <form class="d-inline" action="/spots/<%=spot._id%>?_method=DELETE" method="post">
-                    <button class="btn btn-danger px-6">Delete</button>
-                </form>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow-sm mb-4 border-0">
+                <img src="<%= spot.image %>" class="card-img-top rounded-top" alt="<%= spot.title %>" style="max-height: 500px; object-fit: cover;">
+                <div class="card-body p-4">
+                    <h1 class="card-title fw-bold display-6"><%= spot.title %></h1>
+                    <h5 class="text-muted mb-3"><i class="bi bi-geo-alt"></i> <%= spot.location %></h5>
+                    <p class="card-text lead text-secondary"><%= spot.description %></p>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-info text-white px-4" href="/spots/<%=spot._id%>/edit">
+                            Edit Spot
+                        </a>
+                        <form action="/spots/<%=spot._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-outline-danger px-4">Delete Spot</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- I'm not proud this hopefully will be temporary-->
-        <style>
-            .star-rating {
-                display: flex;
-                flex-direction: row-reverse;
-                /* Important for the hover logic */
-                justify-content: flex-end;
-            }
+        <div class="col-lg-6">
+            <div class="ps-lg-4">
+                <h3 class="fw-bold mb-4">Community Feedback</h3>
 
-            .star-rating input {
-                display: none;
-                /* Hide the actual radio buttons */
-            }
+                <div class="card shadow-sm border-0 mb-5">
+                    <div class="reviews-container">
+                    <% if (spot.reviews.length === 0) { %>
+                        <div class="alert alert-light text-center border-dashed py-4">
+                            <p class="text-muted mb-0">No reviews yet. Be the first to drop some knowledge!</p>
+                        </div>
+                    <% } %>
 
-            .star-rating label {
-                font-size: 2rem;
-                color: #ddd;
-                /* Default grey star */
-                cursor: pointer;
-                transition: color 0.2s;
-            }
+                    <% for(let review of spot.reviews) { %>
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="d-flex justify-content-between">
+                                    <div class="mb-2">
+                                        <% for(let i=1; i <=5; i++) { %>
+                                            <span class="<%= i <= review.stars ? 'text-warning' : 'text-muted' %> fs-5">★</span>
+                                        <% } %>
+                                    </div>
+                                    <form action="/spots/<%= spot._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                        <button class="btn btn-link text-danger p-0 border-0" title="Delete Review">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                                <p class="card-text text-dark"><%= review.body %></p>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
 
-            /* Gold color when checked or hovered */
-            .star-rating input:checked~label,
-            .star-rating label:hover,
-            .star-rating label:hover~label {
-                color: #ffca08;
-                /* Classic Gold */
-            }
-        </style>
+                    <div class="card-body p-4">
+                        <h4 class="card-title mb-3">Leave a Review</h4>
+                        <form class="validated-form" action="/spots/<%=spot._id%>/reviews" method="post" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Rating</label>
+                                <div class="star-rating d-flex flex-row-reverse justify-content-end gap-1">
+                                    <input type="radio" id="star5" name="review[stars]" value="5" />
+                                    <label for="star5" class="fs-2">★</label>
+                                    <input type="radio" id="star4" name="review[stars]" value="4" />
+                                    <label for="star4" class="fs-2">★</label>
+                                    <input type="radio" id="star3" name="review[stars]" value="3" />
+                                    <label for="star3" class="fs-2">★</label>
+                                    <input type="radio" id="star2" name="review[stars]" value="2" />
+                                    <label for="star2" class="fs-2">★</label>
+                                    <input type="radio" id="star1" name="review[stars]" value="1" required />
+                                    <label for="star1" class="fs-2">★</label>
+                                </div>
+                            </div>
 
-        <div>
-            <form class="validated-form" action="/spots/<%=spot._id%>/reviews" method="post" class="mb-3">
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Rating</label>
-                    <div class="star-rating"    >
-                        <input type="radio" id="star5" name="review[stars]" value="5" />
-                        <label for="star5" title="5 stars">★</label>
-
-                        <input type="radio" id="star4" name="review[stars]" value="4" />
-                        <label for="star4" title="4 stars">★</label>
-
-                        <input type="radio" id="star3" name="review[stars]" value="3" />
-                        <label for="star3" title="3 stars">★</label>
-
-                        <input type="radio" id="star2" name="review[stars]" value="2" />
-                        <label for="star2" title="2 stars">★</label>
-
-                        <input type="radio" id="star1" name="review[stars]" value="1" required />
-                        <label for="star1" title="1 star">★</label>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold" for="body">Your Thoughts</label>
+                                <textarea class="form-control" name="review[body]" id="body" rows="3" placeholder="How was the session?" required></textarea>
+                                <div class="valid-feedback">Sweet!</div>
+                            </div>
+                            <button class="btn btn-success w-100 py-2 fw-bold">Submit Review</button>
+                        </form>
                     </div>
                 </div>
-                <div class="mb=3">
-                    <label class="form-label" for="review">Review</label>
-                    <textarea class="form-control" name="review[body]" id="body" cols="30"
-                        rows="5" required></textarea>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                </div>
-                <button class="btn btn-success mt-3">Submit review</button>
-            </form>
-        </div>
 
+                
+            </div>
+        </div>
     </div>
+</div>
+
+<style>
+    .star-rating input { display: none; }
+    .star-rating label { color: #ddd; cursor: pointer; transition: color 0.2s; margin-bottom: 0; }
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label { color: #ffca08; }
+    
+    .border-dashed { border: 2px dashed #dee2e6; }
+</style>
