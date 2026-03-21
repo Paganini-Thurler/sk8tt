@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Review = require("./review")
 
 // Deffines the spot schema
 const spotSchema = new mongoose.Schema({
@@ -14,6 +15,19 @@ const spotSchema = new mongoose.Schema({
         }
     ]
 });
+
+// DELETE Mongoose middleware
+spotSchema.post("findOneAndDelete", async function (document) {
+    if(document){
+        await Review.remove(
+            {
+                _id: {
+                    $in: document.reviews
+                }
+            }
+        )
+    }
+})
 
 // Exports the model 
 module.exports = mongoose.model("Spot", spotSchema);
