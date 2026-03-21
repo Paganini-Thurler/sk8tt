@@ -88,7 +88,7 @@ app.post("/spots", validateSpot, async (request, response,next) =>{
 // (GET) Spot by ID endpoint
 app.get("/spots/:id", async (request, response, next) =>{
     try{
-        const spot = await Spot.findById(request.params.id);
+        const spot = await Spot.findById(request.params.id).populate("reviews");
         if(!spot){
             throw new EndpointError("Spot not found ", 404);
         }
@@ -157,8 +157,20 @@ app.post("/spots/:id/reviews",validateReview, async (request, response, next) =>
         // Redirect to the spot page
         response.redirect(`/spots/${spot._id}`);
     }catch(error){
-        console.log(error)
+        next(error)
     }
+});
+
+app.delete("/spots/:id/reviews/:reviewID",  async (request, response, next) =>{
+    try{
+        const {id, reviewID} = request.params;
+        await Spot.findByIdAndUpdate(id, {$pull: {reviews : reviewID}});
+        await Review.findByIdAndDelete(request.params.reviewID);
+        response.redirect(`/spots/${id}`);
+    }catch(error){
+        next(error)
+    }
+
 });
 
 // Default response
